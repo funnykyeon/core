@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * 구성영역
  */
-
+//@Configuration 미사용시 싱글톤은 깨진다.
 @Configuration
 public class AppConfig {
 

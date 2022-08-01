@@ -9,6 +9,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.Configuration;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -16,6 +17,7 @@ public class ConfigurationSingletonTest {
 
     //싱글톤 검증 테스트
     //스프링Bean으로 싱글톤보장
+    //
     @Test
     void configurationTest() {
         ApplicationContext ac = new AnnotationConfigApplicationContext(AppConfig.class);
@@ -33,5 +35,16 @@ public class ConfigurationSingletonTest {
 
         assertThat(memberService.getMemberRepository()).isSameAs(memberRepository);
         assertThat(orederService.getMemberRepository()).isSameAs(memberRepository);
+    }
+
+
+    //xxxCGLIB = 스프링이 CGLIB라는 바이트코드 조작 라이브러리를 사용하여
+    //AppConfig 클래스를 상속받은 임의의 다른 클래스를 만들고, 그 다른 클래스를 스프링 빈으로 등록한것
+    @Test
+    void configurationDeep() {
+        ApplicationContext ac = new AnnotationConfigApplicationContext(AppConfig.class);
+        AppConfig bean = ac.getBean(AppConfig.class);
+
+        System.out.println("bean = " + bean.getClass());
     }
 }
