@@ -1,14 +1,37 @@
 package hello.core.order;
 
+import hello.core.annotation.MainDiscountPolicy;
 import hello.core.discount.DiscountPolicy;
 import hello.core.member.Member;
 import hello.core.member.MemberRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor // final이 붙은 객체의 생성자를 만들어준다.
+//@RequiredArgsConstructor // final이 붙은 객체의 생성자를 만들어준다.
 public class OrderServiceImpl implements OrderService {
+    /**
+     * @Autowired 필드명 매칭 정리
+     * 1. 타입 매칭
+     * 2. 타입매칭이 결과가 2개 이상일 때 필드명, 파라미터 명으로 빈 이름 매칭
+     */
+
+    /**
+     * @Qualifier 구분자로 매칭
+     * 1. @Qualifier 끼리 매칭
+     * 2. 빈 이름 매칭
+     * 3. 'NoSuchBeanDefinitionException' 예외 발생
+     */
+    // 만든 애노테이션으로도 가
+    public OrderServiceImpl(MemberRepository memberRepository, @MainDiscountPolicy DiscountPolicy discountPolicy) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
+
+    /**
+     * @Primary
+     * 1.우선순위 등록
+     */
+
 
     //final
     private final MemberRepository memberRepository;
